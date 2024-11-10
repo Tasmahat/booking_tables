@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/booking")
@@ -28,21 +29,56 @@ public class BookingController {
         return bookingService.getAllBookings();
     }
 
-    @PostMapping("save_booking")
-    public void saveBooking(@RequestParam String name,
-                            @RequestParam String phone,
-                            @RequestParam Long table_id,
-                            @RequestParam LocalDate date,
-                            @RequestParam LocalTime time,
-                            @RequestParam String comment
+    @PostMapping("create_booking")
+    public Booking createBooking(
+            @RequestParam String name,
+            @RequestParam String phone,
+            @RequestParam Long tableId,
+            @RequestParam LocalDate date,
+            @RequestParam LocalTime time,
+            @RequestParam String comment
     ){
         Booking booking = new Booking();
         booking.setCustomerName(name);
         booking.setPhoneNumber(phone);
-        booking.setTable(tablesService.getTableById(table_id));
+        booking.setTable(tablesService.getTableById(tableId));
         booking.setDate(date);
         booking.setTime(time);
         booking.setComment(comment);
-        bookingService.createBooking(booking);
+        return bookingService.createBooking(booking);
+    }
+
+    @PostMapping("/update_booking")
+    public Booking updateBooking(
+            @RequestParam Long id,
+            @RequestParam Optional<String> name,
+            @RequestParam Optional<String> phone,
+            @RequestParam Optional <Long> tableId,
+            @RequestParam Optional<LocalDate> date,
+            @RequestParam Optional<LocalTime> time,
+            @RequestParam Optional<String> comment
+    ) {
+        Booking booking = bookingService.getBookingById(id);
+        if (booking == null) {
+            System.out.println("Брони не существует");
+            return null;
+        }
+        name.ifPresent(booking::setCustomerName);
+        phone.ifPresent(booking::setPhoneNumber);
+        date.ifPresent(booking::setDate);
+        time.ifPresent(booking::setTime);
+        comment.ifPresent(booking::setComment);
+
+        tableId.map(tablesService::getTableById).ifPresent(booking::setTable);
+        return bookingService.updateBooking(booking);
+    }
+
+    @DeleteMapping("/delete_booking")
+    public void deleteBooking(@RequestParam Long id) {
+        if (bookingService.getBookingById(id) == null) {
+            System.out.println("Не существует брони!");
+            return;
+        }
+        bookingService.deleteBookingById(id);
     }
 }

@@ -26,14 +26,7 @@ public class TablesService {
         return tablesRepository.save(table);
     }
 
-    public Tables updateTable(Long id, String name) {
-        Tables table;
-        table = tablesRepository.findById(id).orElse(null);
-        try {
-            table.setName(name);
-        } catch (Exception e) {
-            System.out.println("Имя столика не поменялось!");
-        }
+    public Tables updateTable(Tables table) {
         return tablesRepository.save(table);
     }
 
