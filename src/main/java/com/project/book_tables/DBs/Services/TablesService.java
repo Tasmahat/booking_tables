@@ -22,16 +22,28 @@ public class TablesService {
         return tablesRepository.findAll();
     }
 
-    public Tables createTable(Tables table) {
-        return tablesRepository.save(table);
-    }
-
-    public Tables updateTable(Tables table) {
+    public Tables createTable(String name) {
+        Tables table = new Tables();
+        table.setName(name);
         return tablesRepository.save(table);
     }
 
     public void deleteTableById(Long id) {
+        if (getTableById(id) == null) {
+            System.out.println("Не существует столика!");
+            return;
+        }
         tablesRepository.deleteById(id);
+    }
+
+    public Tables updateTable(Long id, String name) {
+        Tables table = getTableById(id);
+        if (table == null) {
+            System.out.println("Не существует столика!");
+            return null;
+        }
+        table.setName(name);
+        return tablesRepository.save(table);
     }
 
     public Tables getTableById(Long id) {

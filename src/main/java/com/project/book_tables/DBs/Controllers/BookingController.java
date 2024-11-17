@@ -16,12 +16,10 @@ import java.util.Optional;
 public class BookingController {
 
     private final BookingService bookingService;
-    private final TablesService tablesService;
 
     @Autowired
-    public BookingController(BookingService bookingService, TablesService tablesService) {
+    public BookingController(BookingService bookingService) {
         this.bookingService = bookingService;
-        this.tablesService = tablesService;
     }
 
     @GetMapping("/get_all_booking")
@@ -38,14 +36,7 @@ public class BookingController {
             @RequestParam LocalTime time,
             @RequestParam String comment
     ){
-        Booking booking = new Booking();
-        booking.setCustomerName(name);
-        booking.setPhoneNumber(phone);
-        booking.setTable(tablesService.getTableById(tableId));
-        booking.setDate(date);
-        booking.setTime(time);
-        booking.setComment(comment);
-        return bookingService.createBooking(booking);
+        return bookingService.createBooking(name, phone, tableId, date, time, comment);
     }
 
     @PostMapping("/update_booking")
@@ -58,27 +49,11 @@ public class BookingController {
             @RequestParam Optional<LocalTime> time,
             @RequestParam Optional<String> comment
     ) {
-        Booking booking = bookingService.getBookingById(id);
-        if (booking == null) {
-            System.out.println("Брони не существует");
-            return null;
-        }
-        name.ifPresent(booking::setCustomerName);
-        phone.ifPresent(booking::setPhoneNumber);
-        date.ifPresent(booking::setDate);
-        time.ifPresent(booking::setTime);
-        comment.ifPresent(booking::setComment);
-
-        tableId.map(tablesService::getTableById).ifPresent(booking::setTable);
-        return bookingService.updateBooking(booking);
+        return bookingService.updateBooking(id, name, phone, tableId, date, time, comment);
     }
 
     @DeleteMapping("/delete_booking")
     public void deleteBooking(@RequestParam Long id) {
-        if (bookingService.getBookingById(id) == null) {
-            System.out.println("Не существует брони!");
-            return;
-        }
         bookingService.deleteBookingById(id);
     }
 }

@@ -26,29 +26,17 @@ public class TablesController {
 
     @PostMapping("/create_table")
     public Tables createTable(@RequestParam String name) {
-        Tables table = new Tables();
-        table.setName(name);
-        return tablesService.createTable(table);
+        return tablesService.createTable(name);
     }
 
     @DeleteMapping("/delete_table")
     public void deleteTable(@RequestParam Long id) {
-        if (tablesService.getTableById(id) == null) {
-            System.out.println("Не существует столика!");
-            return;
-        }
         tablesService.deleteTableById(id);
     }
 
     //id кого меняем, name что меняем
     @PostMapping("/update_table")
     public Tables updateTable(@RequestParam Long id, @RequestParam String name) {
-        Tables table = tablesService.getTableById(id);
-        if (table == null) {
-            System.out.println("Не существует столика!");
-            return null;
-        }
-        table.setName(name);
-        return tablesService.updateTable(table);
+        return tablesService.updateTable(id, name);
     }
 }
