@@ -6,8 +6,8 @@ import com.project.book_tables.DBs.Booking;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +31,8 @@ public class BookingService {
             String name,
             String phone,
             Long tableId,
-            LocalDate date,
-            LocalTime time,
+            Date date,
+            Time time,
             String comment
     ) {
         Booking booking = new Booking();
@@ -49,9 +49,9 @@ public class BookingService {
             Long id,
             Optional<String> name,
             Optional<String> phone,
-            Optional <Long> tableId,
-            Optional<LocalDate> date,
-            Optional<LocalTime> time,
+            Optional<Long> tableId,
+            Optional<Date> date,
+            Optional<Time> time,
             Optional<String> comment
     ) {
         Booking booking = getBookingById(id);

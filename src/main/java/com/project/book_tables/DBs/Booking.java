@@ -2,8 +2,8 @@ package com.project.book_tables.DBs;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.sql.Time;
+import java.util.Date;
 
 @Entity
 @Table(name="booking")
@@ -24,10 +24,10 @@ public class Booking {
     private Tables table = new Tables();
 
     @Column (name = "date_b")
-    private LocalDate date;
+    private Date date;
 
     @Column (name = "time_b")
-    private LocalTime time;
+    private Time time;
 
     @Column (name = "comment_b")
     private String comment;
@@ -48,11 +48,11 @@ public class Booking {
         return table;
     }
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public LocalTime getTime() {
+    public Time getTime() {
         return time;
     }
 
@@ -76,11 +76,11 @@ public class Booking {
         this.table = table;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public void setTime(LocalTime time) {
+    public void setTime(Time time) {
         this.time = time;
     }
 
