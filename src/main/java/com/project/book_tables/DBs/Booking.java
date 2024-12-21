@@ -2,8 +2,8 @@ package com.project.book_tables.DBs;
 
 import jakarta.persistence.*;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name="booking")
@@ -24,10 +24,10 @@ public class Booking {
     private Tables table = new Tables();
 
     @Column (name = "date_b")
-    private Date date;
+    private LocalDate date;
 
     @Column (name = "time_b")
-    private Time time;
+    private LocalTime time;
 
     @Column (name = "comment_b")
     private String comment;
@@ -48,11 +48,11 @@ public class Booking {
         return table;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public Time getTime() {
+    public LocalTime getTime() {
         return time;
     }
 
@@ -76,15 +76,25 @@ public class Booking {
         this.table = table;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public void setTime(Time time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    //Реализация паттерна Observer
+    public void updateTableNameNotif(String newName) {
+        System.out.println(String.format(
+                "%s! Уведомляем вас о том, что у вашего столика поменялось имя на %s!",
+                customerName,
+                newName
+                )
+        );
     }
 }

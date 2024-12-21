@@ -3,10 +3,11 @@ package com.project.book_tables.DBs.Controllers;
 import com.project.book_tables.DBs.Booking;
 import com.project.book_tables.DBs.Services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,8 +32,8 @@ public class BookingController {
             @RequestParam String name,
             @RequestParam String phone,
             @RequestParam Long tableId,
-            @RequestParam Date date,
-            @RequestParam Time time,
+            @RequestParam @DateTimeFormat(pattern = "dd.MM.yyyy") LocalDate date,
+            @RequestParam @DateTimeFormat(pattern = "HH:mm") LocalTime time,
             @RequestParam String comment
     ){
         return bookingService.createBooking(name, phone, tableId, date, time, comment);
@@ -44,8 +45,8 @@ public class BookingController {
             @RequestParam Optional<String> name,
             @RequestParam Optional<String> phone,
             @RequestParam Optional<Long> tableId,
-            @RequestParam Optional<Date> date,
-            @RequestParam Optional<Time> time,
+            @RequestParam @DateTimeFormat(pattern = "dd.MM.yyyy") Optional<LocalDate> date,
+            @RequestParam @DateTimeFormat(pattern = "HH:mm") Optional<LocalTime> time,
             @RequestParam Optional<String> comment
     ) {
         return bookingService.updateBooking(id, name, phone, tableId, date, time, comment);

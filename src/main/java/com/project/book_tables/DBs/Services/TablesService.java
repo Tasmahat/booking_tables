@@ -1,12 +1,14 @@
 package com.project.book_tables.DBs.Services;
 
 
+import com.project.book_tables.DBs.Patterns.UpdateFacade;
 import com.project.book_tables.DBs.Repositories.TablesRepository;
 import com.project.book_tables.DBs.Tables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TablesService {
@@ -42,7 +44,8 @@ public class TablesService {
             System.out.println("Не существует столика!");
             return null;
         }
-        table.setName(name);
+        UpdateFacade updateFacade = new UpdateFacade(table);
+        updateFacade.updateTable(Optional.of(name));
         return tablesRepository.save(table);
     }
 

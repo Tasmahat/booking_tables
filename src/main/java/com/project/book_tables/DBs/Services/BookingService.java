@@ -1,13 +1,16 @@
 package com.project.book_tables.DBs.Services;
 
 
+import com.project.book_tables.DBs.Patterns.BookingBuilder;
+import com.project.book_tables.DBs.Patterns.UpdateFacade;
 import com.project.book_tables.DBs.Repositories.BookingRepository;
 import com.project.book_tables.DBs.Booking;
+import com.project.book_tables.DBs.Tables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,17 +34,19 @@ public class BookingService {
             String name,
             String phone,
             Long tableId,
-            Date date,
-            Time time,
+            LocalDate date,
+            LocalTime time,
             String comment
     ) {
-        Booking booking = new Booking();
-        booking.setCustomerName(name);
-        booking.setPhoneNumber(phone);
-        booking.setTable(tablesService.getTableById(tableId));
-        booking.setDate(date);
-        booking.setTime(time);
-        booking.setComment(comment);
+        BookingBuilder builder = new BookingBuilder();
+        Booking booking = builder
+                .setCustomerName(name)
+                .setPhoneNumber(phone)
+                .setTable(tablesService.getTableById(tableId))
+                .setDate(date)
+                .setTime(time)
+                .setComment(comment)
+                .build();
         return bookingRepository.save(booking);
     }
 
@@ -50,8 +55,8 @@ public class BookingService {
             Optional<String> name,
             Optional<String> phone,
             Optional<Long> tableId,
-            Optional<Date> date,
-            Optional<Time> time,
+            Optional<LocalDate> date,
+            Optional<LocalTime> time,
             Optional<String> comment
     ) {
         Booking booking = getBookingById(id);
@@ -59,13 +64,10 @@ public class BookingService {
             System.out.println("Брони не существует");
             return null;
         }
-        name.ifPresent(booking::setCustomerName);
-        phone.ifPresent(booking::setPhoneNumber);
-        date.ifPresent(booking::setDate);
-        time.ifPresent(booking::setTime);
-        comment.ifPresent(booking::setComment);
+        Optional<Tables> table = tableId.map(tablesService::getTableById);
 
-        tableId.map(tablesService::getTableById).ifPresent(booking::setTable);
+        UpdateFacade updateFacade = new UpdateFacade(booking);
+        updateFacade.updateBooking(name, phone, table, date, time, comment);
         return bookingRepository.save(booking);
     }
 

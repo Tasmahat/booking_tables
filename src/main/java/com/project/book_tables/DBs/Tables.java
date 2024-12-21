@@ -37,4 +37,11 @@ public class Tables {
     public void setBookings(Set<Booking> bookings) {
         this.bookings = bookings;
     }
+
+    //Реализация паттерна Observer
+    public void notifyObservers() {
+        for (Booking booking : this.bookings) {
+            booking.updateTableNameNotif(name);
+        }
+    }
 }

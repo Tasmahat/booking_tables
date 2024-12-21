@@ -9,8 +9,8 @@ import org.mockito.Mockito;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
-import java.sql.Time;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,8 +32,8 @@ public class BookingServiceUnitTests {
     @Test
     void testForCreateBookingShouldReturnBooking() {
         Booking booking = new Booking();
-        Date date = new Date();
-        Time time = new Time(1);
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
 
         Mockito.when(bookingRepository.save(Mockito.any(Booking.class))).thenReturn(booking);
 
@@ -60,8 +60,8 @@ public class BookingServiceUnitTests {
                 Optional.of(""),
                 Optional.of(""),
                 Optional.of(1L),
-                Optional.of(new Date()),
-                Optional.of(new Time(1L)),
+                Optional.of(LocalDate.now()),
+                Optional.of(LocalTime.now()),
                 Optional.of("")
                 )
         );
@@ -79,8 +79,8 @@ public class BookingServiceUnitTests {
                 Optional.of(""),
                 Optional.of(""),
                 Optional.of(1L),
-                Optional.of(new Date()),
-                Optional.of(new Time(1L)),
+                Optional.of(LocalDate.now()),
+                Optional.of(LocalTime.now()),
                 Optional.of("")
                 )
         );

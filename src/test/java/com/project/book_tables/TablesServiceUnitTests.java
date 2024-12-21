@@ -3,9 +3,7 @@ package com.project.book_tables;
 import com.project.book_tables.DBs.Repositories.TablesRepository;
 import com.project.book_tables.DBs.Services.TablesService;
 import com.project.book_tables.DBs.Tables;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 
 import java.io.ByteArrayOutputStream;
