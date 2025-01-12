@@ -19,7 +19,7 @@ public class Booking {
     @Column (name = "phone_number")
     private String phoneNumber;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_t")
     private Tables table = new Tables();
 

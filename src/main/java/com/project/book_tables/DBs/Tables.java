@@ -2,6 +2,7 @@ package com.project.book_tables.DBs;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -15,8 +16,8 @@ public class Tables {
     @Column (name = "name_t")
     private String name;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "table", cascade = CascadeType.ALL)
-    private Set<Booking> bookings;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "table", cascade = CascadeType.REMOVE)
+    private Set<Booking> bookings = new HashSet<>();
 
     public Long getId() {
         return id;

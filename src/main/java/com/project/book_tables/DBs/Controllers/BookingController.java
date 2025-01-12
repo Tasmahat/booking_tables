@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/booking")
+@RequestMapping("api/booking")
 public class BookingController {
 
     private final BookingService bookingService;
@@ -22,12 +22,12 @@ public class BookingController {
         this.bookingService = bookingService;
     }
 
-    @GetMapping("/get_all_booking")
+    @GetMapping("/all")
     public List<Booking> getAllBooking() {
         return bookingService.getAllBookings();
     }
 
-    @PostMapping("create_booking")
+    @PostMapping("create")
     public Booking createBooking(
             @RequestParam String name,
             @RequestParam String phone,
@@ -39,7 +39,7 @@ public class BookingController {
         return bookingService.createBooking(name, phone, tableId, date, time, comment);
     }
 
-    @PostMapping("/update_booking")
+    @PostMapping("/update")
     public Booking updateBooking(
             @RequestParam Long id,
             @RequestParam Optional<String> name,
@@ -52,7 +52,7 @@ public class BookingController {
         return bookingService.updateBooking(id, name, phone, tableId, date, time, comment);
     }
 
-    @DeleteMapping("/delete_booking")
+    @DeleteMapping("/delete")
     public void deleteBooking(@RequestParam Long id) {
         bookingService.deleteBookingById(id);
     }
